@@ -14,8 +14,8 @@ https://raiman.github.io/SikuliX1/downloads.html
 https://www.virtualbox.org/wiki/Downloads
 - Vagrant https://www.vagrantup.com/downloads
 - Образ виртуальной машины windows https://app.vagrantup.com/gusztavvargadr/boxes/windows-10
+- В корне проекта должен лежать скачанный файл sikulixapi-2.0.5-win.jar
 
 ## Запуск
-1. Запустить в фоне `java -jar .\sikulixapi-2.0.5-win.jar -p`
-2. Открыть приложение в нужном состоянии
-3. Запустить тест
+1. Открыть приложение в нужном состоянии
+2. Запустить тест
