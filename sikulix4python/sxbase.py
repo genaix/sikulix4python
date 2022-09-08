@@ -13,16 +13,12 @@ class SXBase():
     SXClass = SX
 
     def __init__(self, *args):
-        success = True;
         try:
             self.instance = self.SXClass.getDefaultInstance4py()
             if len(args) > 0:
                 self.instance = self.SXClass.make4py(convertArgs(args))
-        except:
-            success = False
-        if not success:
-            raise Exception("Class not prepared for SikuliX")
-            exit(1)
+        except Exception as e:
+            raise Exception("Class not prepared for SikuliX") from e
 
     def __str__(self):
         return self.instance.toString()
@@ -47,7 +43,7 @@ class SXBase():
                 result = eval(toEval, {"currentObject": self.instance, "args": args})
                 return result
             except:
-                print("Method missing: %s::%s" % (currentObject, mCallError))
+                print(f"Method missing: {currentObject}::{mCallError}")
                 return currentObject
 
         return temp_method

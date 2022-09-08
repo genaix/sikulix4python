@@ -1,3 +1,4 @@
+from typing import Self
 from . sxbase import *
 
 class Region(SXBase):
@@ -32,7 +33,10 @@ class Region(SXBase):
     def click(self, *args):
         if len(args) == 0:
             return self.instance.click()
-        return self.instance.click(convertArgs(args))
+        elif isinstance(pattern := args[0], Pattern):
+            pattern.region(self).click()
+        else:
+            return self.instance.click(convertArgs(args))
 
     def highlight(self, *args):
         """
@@ -56,3 +60,44 @@ class Region(SXBase):
         if len(args) == 0:
             return self.instance.highlight()
         return self.instance.highlight4py(convertArgs(args))
+
+
+class Pattern():
+    """Обертка для имитации использования Pattern подручными средствами."""
+
+    def __init__(self, image: str, timeout: float = 3.0):
+        """Инициализация класса Pattern.
+
+        :param image: имя изображения
+        :param timeout: таймаут поиска соответствующего изображения
+        :param region: область поиска на экране
+        """
+        self.region = None
+        self.image = image
+        self.timeout = timeout
+        self.x_offset = None
+        self.y_offset = None
+
+    def region(self, region: Region) -> Self:
+        """Задать регион поиска."""
+        self.region = region
+        return self
+
+    def targetOffset(self, x_offset: int, y_offset: int) -> Self:
+        """Задать смещение точки для клика.
+
+        :param x_offset: смещение по горизонтали
+        :param y_offset: смещение по вертикали
+        """
+        self.x_offset = x_offset
+        self.y_offset = y_offset
+        return self
+
+    def click(self):
+        """Кликнуть по картинке."""
+        match = self.region.exists(self.image, self.timeout) # method missing, wrong signature
+        if match:
+            match.setTargetOffset(self.x_offset, self.y_offset)
+            match.click()
+        else:
+            raise
