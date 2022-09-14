@@ -1,5 +1,10 @@
+"""Sikulix Region."""
+
 from typing import Self
-from . sxbase import *
+
+from sikulix4python.sikulix.sxbase import SXBase, SXRegion
+from sikulix4python.sikulix.sxgateway import convert_args
+
 
 class Region(SXBase):
     """
@@ -18,7 +23,8 @@ class Region(SXBase):
 
         if the target is
          - not given, it will be lastMatch or center (if no lastMatch) of this Region
-         - an image-filename, a Pattern or an Image, it will first be searched and the valid Match's center/targetOffset will be the target
+         - an image-filename, a Pattern or an Image, it will first be searched and the valid
+         Match's center/targetOffset will be the target
          - a Match: target will be center/targetOffset of the Match
          - a Region: target will be center of the Region
          - a Location: will be the target
@@ -28,15 +34,16 @@ class Region(SXBase):
         """
         if len(args) == 0:
             return self.instance.hover()
-        return self.instance.hover(convertArgs(args))
+        return self.instance.hover(convert_args(args))
 
     def click(self, *args):
+        """Click on screen according to suitable image."""
         if len(args) == 0:
             return self.instance.click()
         elif isinstance(pattern := args[0], Pattern):
             pattern.region(self).click()
         else:
-            return self.instance.click(convertArgs(args))
+            return self.instance.click(convert_args(args))
 
     def highlight(self, *args):
         """
@@ -59,18 +66,17 @@ class Region(SXBase):
         """
         if len(args) == 0:
             return self.instance.highlight()
-        return self.instance.highlight4py(convertArgs(args))
+        return self.instance.highlight4py(convert_args(args))
 
 
-class Pattern():
-    """Обертка для имитации использования Pattern подручными средствами."""
+class Pattern:
+    """Wrapper for similar using Pattern workaround."""
 
     def __init__(self, image: str, timeout: float = 3.0):
         """Инициализация класса Pattern.
 
-        :param image: имя изображения
-        :param timeout: таймаут поиска соответствующего изображения
-        :param region: область поиска на экране
+        :param image: image name
+        :param timeout: timeout for search corresponding image
         """
         self.region = None
         self.image = image
@@ -79,23 +85,23 @@ class Pattern():
         self.y_offset = None
 
     def region(self, region: Region) -> Self:
-        """Задать регион поиска."""
+        """Set region for search."""
         self.region = region
         return self
 
     def targetOffset(self, x_offset: int, y_offset: int) -> Self:
-        """Задать смещение точки для клика.
+        """Set offset point for click.
 
-        :param x_offset: смещение по горизонтали
-        :param y_offset: смещение по вертикали
+        :param x_offset: x-axis offset
+        :param y_offset: y-axis offset
         """
         self.x_offset = x_offset
         self.y_offset = y_offset
         return self
 
     def click(self):
-        """Кликнуть по картинке."""
-        match = self.region.exists(self.image, self.timeout) # method missing, wrong signature
+        """Click on image."""
+        match = self.region.exists(self.image, self.timeout)  # method missing, wrong signature
         if match:
             match.setTargetOffset(self.x_offset, self.y_offset)
             match.click()

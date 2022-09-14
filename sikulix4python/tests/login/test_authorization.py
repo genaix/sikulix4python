@@ -1,21 +1,21 @@
-# https://www.python.org should be opened in Safari
-from time import sleep
 from pathlib import Path
+from time import sleep
 
-from sikulix4python import addImagePath, switchApp, openApp, Region, sxClassHelp
+from sikulix4python.sikulix.sxundotted import add_image_path
+from sikulix4python.sikulix.sxregion import Region, Pattern
 
 IMAGES_DIR = str(Path(__file__).parent.joinpath("images").absolute())
 
-# reset the state of SikuliX
-# only needed, but recommended in main script
-addImagePath(IMAGES_DIR)
+add_image_path(IMAGES_DIR)
 # print(sxClassHelp("Location")); exit()
-#hover(100,100); exit()
-
+# hover(100,100); exit()
 # openApp("VirtualBoxVM")
 # switchApp("VirtualBoxVM")
 # reg_1 = Region(3,43,2042,1047)
-def run_test():
+
+
+def test_authorization():
+    """Пример теста авторизации в плагине."""
     sleep(3)
 
     reg_1 = Region()

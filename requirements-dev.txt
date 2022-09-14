@@ -1,0 +1,6 @@
+flake8==4.0.1
+flake8-quotes==3.3.1
+pydocstyle==6.1.1
+vulture==2.3
+pylint==2.13.5
+mypy==0.942
