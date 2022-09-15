@@ -1,7 +1,5 @@
 """Sikulix Region."""
 
-from typing import Self
-
 from sikulix4python.sikulix.sxbase import SXBase, SXRegion
 from sikulix4python.sikulix.sxgateway import convert_args
 
@@ -41,7 +39,7 @@ class Region(SXBase):
         if len(args) == 0:
             return self.instance.click()
         elif isinstance(pattern := args[0], Pattern):
-            pattern.region(self).click()
+            pattern.set_region(self).click()
         else:
             return self.instance.click(convert_args(args))
 
@@ -68,6 +66,29 @@ class Region(SXBase):
             return self.instance.highlight()
         return self.instance.highlight4py(convert_args(args))
 
+    def wait(self, target: str, timeout: int = None):
+        """Wait for element present.
+
+        :param target: target image to wait
+        :param timeout: time to wait for
+        :return: int: 1 if done without errors, 0 otherwise
+        """
+        if timeout is None:
+            return self.instance.wait(target)
+        return self.instance.wait(target, float(timeout))
+
+    def exists(self, target: str, timeout: int = None):
+        """Check for element present.
+
+        :param target: target image to wait
+        :param timeout: time to wait for
+        :return: a Match object that contains the best match.
+        None is returned, if nothing is found within the specified waiting time.
+        """
+        if timeout is None:
+            return self.instance.exists(target)
+        return self.instance.exists(target, float(timeout))
+
 
 class Pattern:
     """Wrapper for similar using Pattern workaround."""
@@ -84,12 +105,12 @@ class Pattern:
         self.x_offset = None
         self.y_offset = None
 
-    def region(self, region: Region) -> Self:
+    def set_region(self, region: Region) -> "Pattern":
         """Set region for search."""
         self.region = region
         return self
 
-    def targetOffset(self, x_offset: int, y_offset: int) -> Self:
+    def targetOffset(self, x_offset: int, y_offset: int) -> "Pattern":
         """Set offset point for click.
 
         :param x_offset: x-axis offset

@@ -1,5 +1,6 @@
 """Sikulix Gateway."""
 from py4j.java_gateway import Py4JError, Py4JJavaError
+from py4j.protocol import Py4JNetworkError
 
 
 def convert_args(args):
@@ -20,12 +21,12 @@ def sxstart():
         java_gw = JavaGateway()
         sxpkg = java_gw.jvm.org.sikuli
         return java_gw, sxpkg
-    except Py4JJavaError as e:
-        raise Exception("sxstart: SikuliX not running") from e
+    except Py4JNetworkError as e:
+        raise ConnectionError("sxstart: SikuliX not running") from e
 
 
 def sx_class(class_name, pkg_name="script"):
-    class_ref = "SXPKG.%s.%s" % (pkg_name, class_name)
+    class_ref = f"SXPKG.{pkg_name}.{class_name}"
     the_class = eval(class_ref, {"SXPKG": SXPKG})
     try:
         the_class.getDefaultInstance4py()
