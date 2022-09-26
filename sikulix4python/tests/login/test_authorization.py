@@ -1,9 +1,8 @@
 from pathlib import Path
 from time import sleep
 
-from pytest import mark
-from sikulix4python.sikulix.sxundotted import add_image_path
 from sikulix4python.sikulix.sxregion import Region, Pattern
+from sikulix4python.sikulix.sxundotted import add_image_path
 
 IMAGES_DIR = str(Path(__file__).parent.joinpath("images").absolute())
 
@@ -11,7 +10,6 @@ add_image_path(IMAGES_DIR)
 # print(sx_class_help("Location"))
 
 
-@mark.de
 def test_authorization():
     """Пример теста авторизации в плагине."""
     sleep(3)

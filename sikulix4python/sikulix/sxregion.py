@@ -77,6 +77,17 @@ class Region(SXBase):
             return self.instance.wait(target)
         return self.instance.wait(target, float(timeout))
 
+    def waitVanish(self, target: str, timeout: int = None):
+        """Wait for element not present.
+
+        :param target: target image to wait
+        :param timeout: time to wait for
+        :return: int: 1 if done without errors, 0 otherwise
+        """
+        if timeout is None:
+            return self.instance.waitVanish(target)
+        return self.instance.waitVanish(target, float(timeout))
+
     def exists(self, target: str, timeout: int = None):
         """Check for element present.
 
@@ -88,6 +99,20 @@ class Region(SXBase):
         if timeout is None:
             return self.instance.exists(target)
         return self.instance.exists(target, float(timeout))
+
+    def type(self, *args):
+        """Type text to area.
+
+        target is target image for typing
+        text is text for typing
+
+        :param args: see above
+        :return: int: 1 if done without errors, 0 otherwise
+        """
+        if len(args) == 0:
+            return self.instance.type()
+        else:
+            return self.instance.type(*args)
 
 
 class Pattern:

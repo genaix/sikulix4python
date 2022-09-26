@@ -67,3 +67,35 @@ def hover(*args):
      - (int, int): explicit target coordinates
     """
     return SCREEN.hover(*args)
+
+
+def wait(target: str, timeout: int = None):
+    """Wait for element present.
+
+    :param target: target image to wait
+    :param timeout: time to wait for
+    :return: int: 1 if done without errors, 0 otherwise
+    """
+    SCREEN.wait(target, timeout=timeout)
+
+
+def waitVanish(target: str, timeout: int = None):
+    """Wait for element not present.
+
+    :param target: target image to wait
+    :param timeout: time to wait for
+    :return: int: 1 if done without errors, 0 otherwise
+    """
+    SCREEN.waitVanish(target, timeout=timeout)
+
+
+def type(*args):
+    """Type text to area.
+
+    target is target image for typing
+    text is text for typing
+
+    :param args: see above
+    :return: int: 1 if done without errors, 0 otherwise
+    """
+    SCREEN.type(*args)
