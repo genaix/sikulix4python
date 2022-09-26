@@ -26,6 +26,12 @@ def sxstart():
 
 
 def sx_class(class_name, pkg_name="script"):
+    """Get Sikulix class access.
+
+    :param class_name: class name
+    :param pkg_name: package name
+    :return: class
+    """
     class_ref = f"SXPKG.{pkg_name}.{class_name}"
     the_class = eval(class_ref, {"SXPKG": SXPKG})
     try:
@@ -37,6 +43,12 @@ def sx_class(class_name, pkg_name="script"):
 
 
 def sx_class_help(class_name, pkg_name="script"):
+    """Get Sikulix help.
+
+    :param class_name: class name
+    :param pkg_name: package name
+    :return: help information from docstring Java
+    """
     the_class = sx_class(class_name, pkg_name)
     if the_class:
         print(the_class.__doc__)

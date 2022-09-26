@@ -52,8 +52,7 @@ def click(*args):
 
 
 def hover(*args):
-    """
-    **hover** Move the mouse pointer to the given target (args[0])
+    """**hover** Move the mouse pointer to the given target (args[0])
 
     :param args: see above
     :return: 1 if done without errors, 0 otherwise
