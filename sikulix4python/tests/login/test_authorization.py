@@ -1,6 +1,7 @@
 from pathlib import Path
 from time import sleep
 
+from pytest import mark
 from sikulix4python.sikulix.sxregion import Region, Pattern
 from sikulix4python.sikulix.sxundotted import add_image_path
 
@@ -10,6 +11,7 @@ add_image_path(IMAGES_DIR)
 # print(sx_class_help("Location"))
 
 
+@mark.de
 def test_authorization():
     """Пример теста авторизации в плагине."""
     sleep(3)
@@ -26,3 +28,4 @@ def test_authorization():
     reg_1.wait("1663252241627.png", 10)
     match = reg_1.exists("1663245698748.png", 2)
     assert not match, "Должен успешно авторизоваться"
+    reg_1.rightClick(Pattern("1663252241627.png").targetOffset(-4, 13))

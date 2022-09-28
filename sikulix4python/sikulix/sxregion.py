@@ -43,6 +43,15 @@ class Region(SXBase):
         else:
             return self.instance.click(convert_args(args))
 
+    def rightClick(self, *args):
+        """Click on screen right button according to suitable image."""
+        if len(args) == 0:
+            return self.instance.rightClick()
+        elif isinstance(pattern := args[0], Pattern):
+            pattern.set_region(self).rightClick()
+        else:
+            return self.instance.rightClick(convert_args(args))
+
     def highlight(self, *args):
         """
         show a colored frame around the region for a given time or switch on/off
@@ -151,5 +160,14 @@ class Pattern:
         if match:
             match.setTargetOffset(self.x_offset, self.y_offset)
             match.click()
+        else:
+            raise
+
+    def rightClick(self):
+        """Right click on image."""
+        match = self.region.exists(self.image, self.timeout)  # method missing, wrong signature
+        if match:
+            match.setTargetOffset(self.x_offset, self.y_offset)
+            match.rightClick()
         else:
             raise

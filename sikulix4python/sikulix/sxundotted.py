@@ -51,6 +51,11 @@ def click(*args):
     return SCREEN.click(*args)
 
 
+def rightClick(*args):
+    """Right click on screen element."""
+    return SCREEN.rightClick(*args)
+
+
 def hover(*args):
     """**hover** Move the mouse pointer to the given target (args[0])
 
